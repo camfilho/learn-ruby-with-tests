@@ -8,16 +8,28 @@ It is traditional for your first program in a new language to be [Hello, World](
 * Put a new file in it called `hello.rb` and put the following code inside it
 
 ```ruby
-puts 'Hello, World!'
+puts("Hello, World!")
 ```
 
 To run it type `ruby hello.rb`.
 
 ## Congrats! You're now a Ruby developer
 
-Ruby is a scripting language created by Yukihiro Matsumoto \(a.k.a Matz\) When you write a program in Ruby, It's a good practice to put them into files ended with `.rb`.
+Ruby is a scripting language created by Yukihiro Matsumoto \(a.k.a Matz\).
 
-In this simple program, we used a method called `puts` to print our "Hello, World!" to the screen.
+When you write a program in Ruby, It's a good practice to put them into files ended with `.rb`.
+
+In this simple program, we used a method called `puts` to print our "Hello, World!" to the screen. In Ruby, parenthesis is optional when calling a method, so the last example is equivalent to:
+
+```go
+puts "Hello, World!"
+```
+
+#### IRB
+
+When we want to try simple things, it's possible to run Ruby code on the Interactive Ruby Shell. The program is launched from a command line and allows the execution of Ruby commands with immediate response, experimenting in real-time.
+
+So, type `irb` on your terminal, input `puts "Hello, World!"` and voilá. Simple right?
 
 ## How to test
 
