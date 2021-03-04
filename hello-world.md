@@ -37,7 +37,7 @@ How do you test this? It is good to separate your "domain" code from the outside
 
 So let's separate these concerns so it's easier to test
 
-```go
+```ruby
 def hello
   return "Hello, world"
 end
