@@ -21,7 +21,7 @@ When you write a program in Ruby, It's a good practice to put them into files en
 
 In this simple program, we used a method called `puts` to print our "Hello, World!" to the screen. In Ruby, parenthesis is optional when calling a method, so the last example is equivalent to:
 
-```go
+```ruby
 puts "Hello, World!"
 ```
 
