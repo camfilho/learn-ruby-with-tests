@@ -1,11 +1,11 @@
 # Hello, Mundo
 
-**[You can find all the code for this chapter here](https://github.com/camfilho/learn-ruby-with-tests/tree/main/hello-world)**
+[**You can find all the code for this chapter here**](https://github.com/camfilho/learn-ruby-with-tests/tree/main/hello-world)
 
 It is traditional for your first program in a new language to be [Hello, World](https://en.m.wikipedia.org/wiki/%22Hello,_World!%22_program).
 
-- Create a folder wherever you like
-- Put a new file in it called `hello.rb` and put the following code inside it
+* Create a folder wherever you like
+* Put a new file in it called `hello.rb` and put the following code inside it
 
 ```ruby
 puts 'Hello, World!'
@@ -13,10 +13,9 @@ puts 'Hello, World!'
 
 To run it type `ruby hello.rb`.
 
-## Congrats! You're now a developer
+## Congrats! You're now a Ruby developer
 
-Ruby Ruby is a scripting language created by Yukihiro Matsumoto (a.k.a Matz)
-When you write a program in Ruby, It's a good practice to put them into files ended with `.rb`.
+Ruby is a scripting language created by Yukihiro Matsumoto \(a.k.a Matz\) When you write a program in Ruby, It's a good practice to put them into files ended with `.rb`.
 
 In this simple program, we used a method called `puts` to print our "Hello, World!" to the screen.
 
@@ -32,11 +31,11 @@ package main
 import "fmt"
 
 func Hello() string {
-	return "Hello, world"
+    return "Hello, world"
 }
 
 func main() {
-	fmt.Println(Hello())
+    fmt.Println(Hello())
 }
 ```
 
@@ -50,12 +49,12 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
-	got := Hello()
-	want := "Hello, world"
+    got := Hello()
+    want := "Hello, world"
 
-	if got != want {
-		t.Errorf("got %q want %q", got, want)
-	}
+    if got != want {
+        t.Errorf("got %q want %q", got, want)
+    }
 }
 ```
 
@@ -77,6 +76,7 @@ For now, it's enough to know that your `t` of type `*testing.T` is your "hook" i
 We've covered some new topics:
 
 #### `if`
+
 If statements in Go are very much like other programming languages.
 
 #### Declaring variables
@@ -97,7 +97,7 @@ Another quality of life feature of Go is the documentation. You can launch the d
 
 The vast majority of the standard library has excellent documentation with examples. Navigating to [http://localhost:8000/pkg/testing/](http://localhost:8000/pkg/testing/) would be worthwhile to see what's available to you.
 
-If you don't have `godoc` command, then maybe you are using the newer version of Go (1.14 or later) which is [no longer including `godoc`](https://golang.org/doc/go1.14#godoc). You can manually install it with `go get golang.org/x/tools/cmd/godoc`.
+If you don't have `godoc` command, then maybe you are using the newer version of Go \(1.14 or later\) which is [no longer including `godoc`](https://golang.org/doc/go1.14#godoc). You can manually install it with `go get golang.org/x/tools/cmd/godoc`.
 
 ### Hello, YOU
 
@@ -115,12 +115,12 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
-	got := Hello("Chris")
-	want := "Hello, Chris"
+    got := Hello("Chris")
+    want := "Hello, Chris"
 
-	if got != want {
-		t.Errorf("got %q want %q", got, want)
-	}
+    if got != want {
+        t.Errorf("got %q want %q", got, want)
+    }
 }
 ```
 
@@ -140,7 +140,7 @@ Edit the `Hello` function to accept an argument of type string
 
 ```go
 func Hello(name string) string {
-	return "Hello, world"
+    return "Hello, world"
 }
 ```
 
@@ -148,7 +148,7 @@ If you try and run your tests again your `hello.go` will fail to compile because
 
 ```go
 func main() {
-	fmt.Println(Hello("world"))
+    fmt.Println(Hello("world"))
 }
 ```
 
@@ -164,7 +164,7 @@ Let's make the test pass by using the name argument and concatenate it with `Hel
 
 ```go
 func Hello(name string) string {
-	return "Hello, " + name
+    return "Hello, " + name
 }
 ```
 
@@ -172,11 +172,9 @@ When you run the tests they should now pass. Normally as part of the TDD cycle w
 
 ### A note on source control
 
-At this point, if you are using source control \(which you should!\) I would
-`commit` the code as it is. We have working software backed by a test.
+At this point, if you are using source control \(which you should!\) I would `commit` the code as it is. We have working software backed by a test.
 
-I _wouldn't_ push to master though, because I plan to refactor next. It is nice
-to commit at this point in case you somehow get into a mess with refactoring - you can always go back to the working version.
+I _wouldn't_ push to master though, because I plan to refactor next. It is nice to commit at this point in case you somehow get into a mess with refactoring - you can always go back to the working version.
 
 There's not a lot to refactor here, but we can introduce another language feature, _constants_.
 
@@ -194,7 +192,7 @@ We can now refactor our code
 const englishHelloPrefix = "Hello, "
 
 func Hello(name string) string {
-	return englishHelloPrefix + name
+    return englishHelloPrefix + name
 }
 ```
 
@@ -213,23 +211,23 @@ Start by writing a new failing test
 ```go
 func TestHello(t *testing.T) {
 
-	t.Run("saying hello to people", func(t *testing.T) {
-		got := Hello("Chris")
-		want := "Hello, Chris"
+    t.Run("saying hello to people", func(t *testing.T) {
+        got := Hello("Chris")
+        want := "Hello, Chris"
 
-		if got != want {
-			t.Errorf("got %q want %q", got, want)
-		}
-	})
+        if got != want {
+            t.Errorf("got %q want %q", got, want)
+        }
+    })
 
-	t.Run("say 'Hello, World' when an empty string is supplied", func(t *testing.T) {
-		got := Hello("")
-		want := "Hello, World"
+    t.Run("say 'Hello, World' when an empty string is supplied", func(t *testing.T) {
+        got := Hello("")
+        want := "Hello, World"
 
-		if got != want {
-			t.Errorf("got %q want %q", got, want)
-		}
-	})
+        if got != want {
+            t.Errorf("got %q want %q", got, want)
+        }
+    })
 
 }
 ```
@@ -249,24 +247,24 @@ We can and should refactor our tests.
 ```go
 func TestHello(t *testing.T) {
 
-	assertCorrectMessage := func(t testing.TB, got, want string) {
-		t.Helper()
-		if got != want {
-			t.Errorf("got %q want %q", got, want)
-		}
-	}
+    assertCorrectMessage := func(t testing.TB, got, want string) {
+        t.Helper()
+        if got != want {
+            t.Errorf("got %q want %q", got, want)
+        }
+    }
 
-	t.Run("saying hello to people", func(t *testing.T) {
-		got := Hello("Chris")
-		want := "Hello, Chris"
-		assertCorrectMessage(t, got, want)
-	})
+    t.Run("saying hello to people", func(t *testing.T) {
+        got := Hello("Chris")
+        want := "Hello, Chris"
+        assertCorrectMessage(t, got, want)
+    })
 
-	t.Run("empty string defaults to 'World'", func(t *testing.T) {
-		got := Hello("")
-		want := "Hello, World"
-		assertCorrectMessage(t, got, want)
-	})
+    t.Run("empty string defaults to 'World'", func(t *testing.T) {
+        got := Hello("")
+        want := "Hello, World"
+        assertCorrectMessage(t, got, want)
+    })
 
 }
 ```
@@ -285,10 +283,10 @@ Now that we have a well-written failing test, let's fix the code, using an `if`.
 const englishHelloPrefix = "Hello, "
 
 func Hello(name string) string {
-	if name == "" {
-		name = "World"
-	}
-	return englishHelloPrefix + name
+    if name == "" {
+        name = "World"
+    }
+    return englishHelloPrefix + name
 }
 ```
 
@@ -296,8 +294,7 @@ If we run our tests we should see it satisfies the new requirement and we haven'
 
 ### Back to source control
 
-Now we are happy with the code I would amend the previous commit so we only
-check in the lovely version of our code with its test.
+Now we are happy with the code I would amend the previous commit so we only check in the lovely version of our code with its test.
 
 ### Discipline
 
@@ -328,11 +325,11 @@ We should be confident that we can use TDD to flesh out this functionality easil
 Write a test for a user passing in Spanish. Add it to the existing suite.
 
 ```go
-	t.Run("in Spanish", func(t *testing.T) {
-		got := Hello("Elodie", "Spanish")
-		want := "Hola, Elodie"
-		assertCorrectMessage(t, got, want)
-	})
+    t.Run("in Spanish", func(t *testing.T) {
+        got := Hello("Elodie", "Spanish")
+        want := "Hola, Elodie"
+        assertCorrectMessage(t, got, want)
+    })
 ```
 
 Remember not to cheat! _Test first_. When you try and run the test, the compiler _should_ complain because you are calling `Hello` with two arguments rather than one.
@@ -347,10 +344,10 @@ Fix the compilation problems by adding another string argument to `Hello`
 
 ```go
 func Hello(name string, language string) string {
-	if name == "" {
-		name = "World"
-	}
-	return englishHelloPrefix + name
+    if name == "" {
+        name = "World"
+    }
+    return englishHelloPrefix + name
 }
 ```
 
@@ -372,15 +369,15 @@ We can use `if` here to check the language is equal to "Spanish" and if so chang
 
 ```go
 func Hello(name string, language string) string {
-	if name == "" {
-		name = "World"
-	}
+    if name == "" {
+        name = "World"
+    }
 
-	if language == "Spanish" {
-		return "Hola, " + name
-	}
+    if language == "Spanish" {
+        return "Hola, " + name
+    }
 
-	return englishHelloPrefix + name
+    return englishHelloPrefix + name
 }
 ```
 
@@ -394,15 +391,15 @@ const englishHelloPrefix = "Hello, "
 const spanishHelloPrefix = "Hola, "
 
 func Hello(name string, language string) string {
-	if name == "" {
-		name = "World"
-	}
+    if name == "" {
+        name = "World"
+    }
 
-	if language == spanish {
-		return spanishHelloPrefix + name
-	}
+    if language == spanish {
+        return spanishHelloPrefix + name
+    }
 
-	return englishHelloPrefix + name
+    return englishHelloPrefix + name
 }
 ```
 
@@ -416,19 +413,19 @@ You may have written something that looks roughly like this
 
 ```go
 func Hello(name string, language string) string {
-	if name == "" {
-		name = "World"
-	}
+    if name == "" {
+        name = "World"
+    }
 
-	if language == spanish {
-		return spanishHelloPrefix + name
-	}
+    if language == spanish {
+        return spanishHelloPrefix + name
+    }
 
-	if language == french {
-		return frenchHelloPrefix + name
-	}
+    if language == french {
+        return frenchHelloPrefix + name
+    }
 
-	return englishHelloPrefix + name
+    return englishHelloPrefix + name
 }
 ```
 
@@ -438,20 +435,20 @@ When you have lots of `if` statements checking a particular value it is common t
 
 ```go
 func Hello(name string, language string) string {
-	if name == "" {
-		name = "World"
-	}
+    if name == "" {
+        name = "World"
+    }
 
-	prefix := englishHelloPrefix
+    prefix := englishHelloPrefix
 
-	switch language {
-	case french:
-		prefix = frenchHelloPrefix
-	case spanish:
-		prefix = spanishHelloPrefix
-	}
+    switch language {
+    case french:
+        prefix = frenchHelloPrefix
+    case spanish:
+        prefix = spanishHelloPrefix
+    }
 
-	return prefix + name
+    return prefix + name
 }
 ```
 
@@ -463,23 +460,23 @@ You could argue that maybe our function is getting a little big. The simplest re
 
 ```go
 func Hello(name string, language string) string {
-	if name == "" {
-		name = "World"
-	}
+    if name == "" {
+        name = "World"
+    }
 
-	return greetingPrefix(language) + name
+    return greetingPrefix(language) + name
 }
 
 func greetingPrefix(language string) (prefix string) {
-	switch language {
-	case french:
-		prefix = frenchHelloPrefix
-	case spanish:
-		prefix = spanishHelloPrefix
-	default:
-		prefix = englishHelloPrefix
-	}
-	return
+    switch language {
+    case french:
+        prefix = frenchHelloPrefix
+    case spanish:
+        prefix = spanishHelloPrefix
+    default:
+        prefix = englishHelloPrefix
+    }
+    return
 }
 ```
 

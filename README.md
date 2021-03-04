@@ -1,6 +1,1 @@
-# Learn Ruby with Tests
-
-## Ruby Fundamentals
-
-
-
+# learn-ruby-with-tests
