@@ -35,33 +35,43 @@ So, type `irb` on your terminal, input `puts "Hello, World!"` and voilá. Simple
 
 How do you test this? It is good to separate your "domain" code from the outside world \(side-effects\). The `puts` is a side effect \(printing to the terminal\) and the string we send in is our domain.
 
-So let's separate these concerns so it's easier to test
+So let's separate these concerns so it's easier to test.
 
 ```ruby
-def hello
-  return "Hello, world"
+class Greeting
+  def hello
+    return "Hello, World!"
+  end
 end
 
-puts hello()
+puts Greeting.new.hello
 ```
 
-We have created a new function again with `func` but this time we've added another keyword `string` in the definition. This means this function returns a `string`.
+We have created a new method  with `def` and it returns a string `"Hello, World!".`
 
-Now create a new file called `hello_test.go` where we are going to write a test for our `Hello` function
+Also, we extracted the `hello` method and made it an instance method of the class `Greeting`. _More on class and object-oriented programming later._
 
-```go
-package main
+So, now instead of passing the hardcoded string to the puts method, we are calling the instance method `Greeting#hello.`In this way, we made our code easier to test.
 
-import "testing"
+Now let's add the testing code inside the same file. This is not a good practice, but let's simplify things right now.
 
-func TestHello(t *testing.T) {
-    got := Hello()
-    want := "Hello, world"
+```ruby
+require "minitest/autorun"
 
-    if got != want {
-        t.Errorf("got %q want %q", got, want)
-    }
-}
+class Greeting
+  def hello
+    return "Hello, World!"
+  end
+end
+
+puts Greeting.new.hello
+
+# Testing code
+class GreetingTest < Minitest::Test
+  def test_hello_world_method
+    assert Greeting.new.hello == "Hello, World!"
+  end
+end
 ```
 
 Before explaining, let's just run the code. Run `go test` in your terminal. It should've passed! Just to check, try deliberately breaking the test by changing the `want` string.
