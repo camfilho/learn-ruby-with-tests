@@ -1,4 +1,4 @@
-# Hello, World
+# Hello, Mundo
 
 **[You can find all the code for this chapter here](https://github.com/camfilho/learn-ruby-with-tests/tree/main/hello-world)**
 
