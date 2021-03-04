@@ -33,22 +33,16 @@ So, type `irb` on your terminal, input `puts "Hello, World!"` and voilá. Simple
 
 ## How to test
 
-How do you test this? It is good to separate your "domain" code from the outside world \(side-effects\). The `fmt.Println` is a side effect \(printing to stdout\) and the string we send in is our domain.
+How do you test this? It is good to separate your "domain" code from the outside world \(side-effects\). The `puts` is a side effect \(printing to the terminal\) and the string we send in is our domain.
 
 So let's separate these concerns so it's easier to test
 
 ```go
-package main
+def hello
+  return "Hello, world"
+end
 
-import "fmt"
-
-func Hello() string {
-    return "Hello, world"
-}
-
-func main() {
-    fmt.Println(Hello())
-}
+puts hello()
 ```
 
 We have created a new function again with `func` but this time we've added another keyword `string` in the definition. This means this function returns a `string`.
