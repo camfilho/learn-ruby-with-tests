@@ -1,0 +1,333 @@
+= Hello, World!
+Carlos Medeiros <@camfilho>
+:description: First Chapter
+:sectanchors:
+:url-repo: https://twitter.com/camfilho
+:source-highlighter: rouge
+------------------------------------
+We're going to start your jorney with two words: "Hello, World!"
+
+It is quite common to start in the software development world by writing a program that prints those two words to the screen.
+So, let's write it right now!
+
+* Create a folder wherever you want to save your code.
+* Create a file named `hello.rb` in that folder and put the following code in it:
+
+[source,ruby]
+----
+puts("Hello, World!")
+----
+
+Let's run it by typing `ruby hello.rb` in the terminal.
+
+== How it works
+When you type `ruby hello.rb` in your terminal, the computer will execute the code in the file `hello.rb`.
+However, this execution isn't automatic. In order to the computer understand the text we wrote there, it's necessary
+that something interprets it into a language that computers understand, that's where the Ruby Interpreter comes into the action.
+When the interpreter sees the `puts` "command", it will translate to the computer: "I want to print the argument they inputed to the screen". In this case, the argument is `"Hello, World!"`.
+
+== Expanding the code
+The `puts` command we wrote up there is called a method. Methods are reusable pieces of code that are associated with a class.
+In Ruby, it is not mandatory to use parentheses when calling a method, so sometimes we see code that looks like plain english.
+
+[source,ruby]
+----
+puts "Hello, World!"
+----
+
+It's common to "organize" methods inside Classes, so we can call them later using its instances (more on classes and objects later on).
+Let's define our first class:
+
+* Change the code inside `hello.rb` to:
+
+[source,ruby]
+----
+class Greeting
+  def say_hi
+    puts "Hello, World!"
+  end
+end
+
+Greeting.new.say_hi
+----
+Ruby reserves the `class` keyword to define a class. After this keyword we define the name of the class with the first letter capitalized, `Greeting`.
+When we're done defining our class, we close it with the keyword `end`.
+
+Run the code again with `ruby hello.rb` in your terminal to see the same message printed.
+
+== Writing our first test
+Let's start by wiriting a test inside the same file `hello.rb`.
+In practice, we separate the test files from the source code, but we're going to keep them together by now.
+
+In order to make it easier to test, we will split the method that generates the message we want to print to the screen
+from the method that actually prints it. In this way, we can test the method without having to worry about the output.
+
+* First, change the code inside `hello.rb` to:
+
+[source,ruby]
+.hello.rb
+----
+class Greeting
+  def message
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message
+  end
+end
+----
+
+* Then, let's write a test for the method `message`:
+
+[source,ruby]
+.hello.rb
+----
+require 'test/unit'
+
+class Greeting
+  def message
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message
+  end
+end
+
+class TestGreeting < Test::Unit::TestCase
+  def test_message
+    greeting = Greeting.new
+    result = greeting.message
+    expected_value = "Hello, World!"
+
+    assert_equal expected_value, result
+  end
+end
+----
+
+After running `ruby hello.rb` in your terminal, you should see the something similar to this:
+
+```
+Started
+.
+Finished in 0.000465 seconds.
+-------------------------------------------------------------------------------
+1 tests, 1 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+-------------------------------------------------------------------------------
+```
+
+That means that our file has 1 test, 1 assertion was made and no failures or errors were found.
+So, we successfully tested our code, yay!
+
+=== Splitting test files from source code
+Let's separate the test files from the source code.
+Let's leave our source code in `hello.rb` and our test in `hello_test.rb`.
+
+[source,ruby]
+.hello.rb
+----
+
+class Greeting
+  def message
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message
+  end
+end
+----
+
+[source,ruby]
+.hello_test.rb
+----
+require 'test/unit'
+
+class TestGreeting < Test::Unit::TestCase
+  def test_message
+    greeting = Greeting.new
+    result = greeting.message
+    expected_value = "Hello, World!"
+
+    assert_equal expected_value, result
+  end
+end
+----
+
+If you try to run the `ruby hello_test.rb` in your terminal, you should see the following output:
+```
+Started
+E
+===============================================================================
+Error: test_message(TestGreeting): NameError: uninitialized constant TestGreeting::Greeting
+world_test.rb:5:in `test_message'
+     2:
+     3: class TestGreeting < Test::Unit::TestCase
+     4:   def test_message
+  => 5:     greeting = Greeting.new
+     6:     result = greeting.message
+     7:     expected_value = "Hello, World!"
+     8:
+===============================================================================
+
+Finished in 0.004945 seconds.
+-------------------------------------------------------------------------------
+1 tests, 0 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+0% passed
+-------------------------------------------------------------------------------
+```
+
+The output shows that 1 test was run and 1 error happened. We can see that the reason for the error was because of an "uninitialized constant".
+This means that since now our tests are separated from the source code, we can't access the `Greeting` class.
+In order to get it fixed, we need to "import" the `hello.rb` file into our test file, so the tests will know about
+the existence of the `Greeting` class.
+
+[source,ruby]
+.hello_test.rb
+----
+require 'test/unit'
+require './hello.rb'
+
+class TestGreeting < Test::Unit::TestCase
+  def test_message
+    greeting = Greeting.new
+    result = greeting.message
+    expected_value = "Hello, World!"
+
+    assert_equal expected_value, result
+  end
+end
+----
+
+After running the test, we are back to green (success) again!
+
+=== Variables
+You may have noticed that we some words with the equal sign `=` in fron of it. Those are called variables.
+When we write a variable, we are telling the computer to tag the value that we inputed on the right side of the equal sign with the name that we inputed on the left side of the equal sign.
+Variables can contain letters, numbers, underscores and dots. They are used to tag values so we can easily identify them throughout the code.
+
+In this case, we named our variable `result` to tag the value that we got from the `message` method. We also named our variable `expected_value` to tag the value that we expected to get from the `message` method. Finally, we asserted that the value of `result` is equal to `expected_value`.
+
+=== Receive arguments
+Now that we learned a bit abour variables and testing, let's expand our greeting method to receive arguments.
+It's a good practice to write tests before writing the code that uses them. This is one of the steps done by the TDD process.
+First write a test that fails, write the code that makes the test pass, then refactor. Those steps are also known as the red-green-refactor cycle.
+
+Let's change our `test_message` method in our `hello_test.rb` file to:
+
+[source,ruby]
+.hello_test.rb
+----
+require 'test/unit'
+require './hello.rb'
+
+class TestGreeting < Test::Unit::TestCase
+  def test_message_with_argument
+    greeting = Greeting.new
+    result = greeting.message("Ruby")
+    expected_value = "Hello, Ruby"
+
+    assert_equal expected_value, result
+  end
+end
+----
+
+When we run the test with `ruby hello_test.rb`, we should see get an `ArgumentError` error.
+It says that the message method was called with 1 argument, but it expects 0 arguments.
+This is good because we changed our tests but not the actual code.
+
+As we are starting to follow the TDD process, let's make the minimum changes to the code to fix the error.
+
+[source,ruby]
+.hello.rb
+----
+class Greeting
+  def message(name)
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message("Ruby")
+  end
+end
+----
+
+After running the test again, we should get 1 failure, instead an error.
+
+```
+<"Hello, Ruby"> expected but was
+<"Hello, World!">
+```
+See the difference? The error is telling us that we are expecting `"Hello, Ruby"` but we got `"Hello, World!"`.
+Let's make the test pass by using an if statement to check if an argument was passed to the method.
+This is not the best way to do it, but it is good to introduce the concept of if statements.
+
+[source,ruby]
+.hello.rb
+----
+class Greeting
+  def message(name)
+    if(name)
+      "Hello, #{name}"
+    else
+      "Hello, World!"
+    end
+  end
+
+  def say_hi
+    puts message("Ruby")
+  end
+end
+----
+
+Running again the test, we should get an output similar to this:
+
+```
+1 tests, 1 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+```
+
+=== Making decisions
+In Ruby, the keywords if/else are used to make decisions.
+Sometimes we need to take actions based on some conditions like:
+- "If it rains, I will stay at home."
+- "If I don't practice, I don't learn Ruby."
+
+[source,ruby]
+price = 10
+if(price < 10)
+  puts("I will buy this book.")
+ else
+  puts("I will not buy this book.")
+end
+
+This code prints "I will buy this book." because the price is less than 10.
+So, the condition `price < 10` is true, and the code inside the if statement is executed.
+If the price was equal or greater than 10, the code inside the else statement would be executed, thus printing "I will not buy this book."
+
+The symbol "<" is used to compare values. It is called "less than" and in Ruby we have multiple ways to compare values.
+
+[cols="1,1"]
+|===
+| Operator | Description
+
+|<
+|Less than
+
+|>
+|Greater than
+
+|>=
+|Greater than or equal to
+
+|==
+|Equal to
+
+|!=
+|Not equal to
+|<=
+|Less than or equal to
+
+|===

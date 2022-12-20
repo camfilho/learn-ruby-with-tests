@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Hello, World!</title>
+<date>------------------------------------</date>
+<author>
+<personname>
+<firstname>Carlos</firstname>
+<surname>Medeiros</surname>
+</personname>
+<email>@camfilho</email>
+</author>
+<authorinitials>CM</authorinitials>
+</info>
+<simpara>We&#8217;re going to start your jorney with two words: "Hello, World!"</simpara>
+<simpara>It is quite common to start in the software development world by writing a program that prints those two words to the screen.
+So, let&#8217;s write it right now!</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Create a folder wherever you want to save your code.</simpara>
+</listitem>
+<listitem>
+<simpara>Create a file named <literal>hello.rb</literal> in that folder and put the following code in it:</simpara>
+</listitem>
+</itemizedlist>
+<programlisting language="ruby" linenumbering="unnumbered">puts("Hello, World!")</programlisting>
+<simpara>Let&#8217;s run it by typing <literal>ruby hello.rb</literal> in the terminal.</simpara>
+<section xml:id="_how_it_works">
+<title>How it works</title>
+<simpara>When you type <literal>ruby hello.rb</literal> in your terminal, the computer will execute the code in the file <literal>hello.rb</literal>.
+However, this execution isn&#8217;t automatic. In order to the computer understand the text we wrote there, it&#8217;s necessary
+that something interprets it into a language that computers understand, that&#8217;s where the Ruby Interpreter comes into the action.
+When the interpreter sees the <literal>puts</literal> "command", it will translate to the computer: "I want to print the argument they inputed to the screen". In this case, the argument is <literal>"Hello, World!"</literal>.</simpara>
+</section>
+<section xml:id="_expanding_the_code">
+<title>Expanding the code</title>
+<simpara>The <literal>puts</literal> command we wrote up there is called a method. Methods are reusable pieces of code that are associated with a class.
+In Ruby, it is not mandatory to use parentheses when calling a method, so sometimes we see code that looks like plain english.</simpara>
+<programlisting language="ruby" linenumbering="unnumbered">puts "Hello, World!"</programlisting>
+<simpara>It&#8217;s common to "organize" methods inside Classes, so we can call them later using its instances (more on classes and objects later on).
+Let&#8217;s define our first class:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Change the code inside <literal>hello.rb</literal> to:</simpara>
+</listitem>
+</itemizedlist>
+<programlisting language="ruby" linenumbering="unnumbered">class Greeting
+  def say_hi
+    puts "Hello, World!"
+  end
+end
+
+Greeting.new.say_hi</programlisting>
+<simpara>Ruby reserves the <literal>class</literal> keyword to define a class. After this keyword we define the name of the class with the first letter capitalized, <literal>Greeting</literal>.
+When we&#8217;re done defining our class, we close it with the keyword <literal>end</literal>.</simpara>
+<simpara>Run the code again with <literal>ruby hello.rb</literal> in your terminal to see the same message printed.</simpara>
+</section>
+<section xml:id="_writing_our_first_test">
+<title>Writing our first test</title>
+<simpara>Let&#8217;s start by wiriting a test inside the same file <literal>hello.rb</literal>.
+In practice, we separate the test files from the source code, but we&#8217;re going to keep them together by now.</simpara>
+<simpara>In order to make it easier to test, we will split the method that generates the message we want to print to the screen
+from the method that actually prints it. In this way, we can test the method without having to worry about the output.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>First, change the code inside <literal>hello.rb</literal> to:</simpara>
+</listitem>
+</itemizedlist>
+<formalpara>
+<title>hello.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">class Greeting
+  def message
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message
+  end
+end</programlisting>
+</para>
+</formalpara>
+<itemizedlist>
+<listitem>
+<simpara>Then, let&#8217;s write a test for the method <literal>message</literal>:</simpara>
+</listitem>
+</itemizedlist>
+<formalpara>
+<title>hello.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">require 'test/unit'
+
+class Greeting
+  def message
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message
+  end
+end
+
+class TestGreeting &lt; Test::Unit::TestCase
+  def test_message
+    greeting = Greeting.new
+    result = greeting.message
+    expected_value = "Hello, World!"
+
+    assert_equal expected_value, result
+  end
+end</programlisting>
+</para>
+</formalpara>
+<simpara>After running <literal>ruby hello.rb</literal> in your terminal, you should see the something similar to this:</simpara>
+<screen linenumbering="unnumbered">Started
+.
+Finished in 0.000465 seconds.
+-------------------------------------------------------------------------------
+1 tests, 1 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+-------------------------------------------------------------------------------</screen>
+<simpara>That means that our file has 1 test, 1 assertion was made and no failures or errors were found.
+So, we successfully tested our code, yay!</simpara>
+<section xml:id="_splitting_test_files_from_source_code">
+<title>Splitting test files from source code</title>
+<simpara>Let&#8217;s separate the test files from the source code.
+Let&#8217;s leave our source code in <literal>hello.rb</literal> and our test in <literal>hello_test.rb</literal>.</simpara>
+<formalpara>
+<title>hello.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">class Greeting
+  def message
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message
+  end
+end</programlisting>
+</para>
+</formalpara>
+<formalpara>
+<title>hello_test.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">require 'test/unit'
+
+class TestGreeting &lt; Test::Unit::TestCase
+  def test_message
+    greeting = Greeting.new
+    result = greeting.message
+    expected_value = "Hello, World!"
+
+    assert_equal expected_value, result
+  end
+end</programlisting>
+</para>
+</formalpara>
+<simpara>If you try to run the <literal>ruby hello_test.rb</literal> in your terminal, you should see the following output:</simpara>
+<screen linenumbering="unnumbered">Started
+E
+===============================================================================
+Error: test_message(TestGreeting): NameError: uninitialized constant TestGreeting::Greeting
+world_test.rb:5:in `test_message'
+     2:
+     3: class TestGreeting &lt; Test::Unit::TestCase
+     4:   def test_message
+  =&gt; 5:     greeting = Greeting.new
+     6:     result = greeting.message
+     7:     expected_value = "Hello, World!"
+     8:
+===============================================================================
+
+Finished in 0.004945 seconds.
+-------------------------------------------------------------------------------
+1 tests, 0 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+0% passed
+-------------------------------------------------------------------------------</screen>
+<simpara>The output shows that 1 test was run and 1 error happened. We can see that the reason for the error was because of an "uninitialized constant".
+This means that since now our tests are separated from the source code, we can&#8217;t access the <literal>Greeting</literal> class.
+In order to get it fixed, we need to "import" the <literal>hello.rb</literal> file into our test file, so the tests will know about
+the existence of the <literal>Greeting</literal> class.</simpara>
+<formalpara>
+<title>hello_test.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">require 'test/unit'
+require './hello.rb'
+
+class TestGreeting &lt; Test::Unit::TestCase
+  def test_message
+    greeting = Greeting.new
+    result = greeting.message
+    expected_value = "Hello, World!"
+
+    assert_equal expected_value, result
+  end
+end</programlisting>
+</para>
+</formalpara>
+<simpara>After running the test, we are back to green (success) again!</simpara>
+</section>
+<section xml:id="_variables">
+<title>Variables</title>
+<simpara>You may have noticed that we some words with the equal sign <literal>=</literal> in fron of it. Those are called variables.
+When we write a variable, we are telling the computer to tag the value that we inputed on the right side of the equal sign with the name that we inputed on the left side of the equal sign.
+Variables can contain letters, numbers, underscores and dots. They are used to tag values so we can easily identify them throughout the code.</simpara>
+<simpara>In this case, we named our variable <literal>result</literal> to tag the value that we got from the <literal>message</literal> method. We also named our variable <literal>expected_value</literal> to tag the value that we expected to get from the <literal>message</literal> method. Finally, we asserted that the value of <literal>result</literal> is equal to <literal>expected_value</literal>.</simpara>
+</section>
+<section xml:id="_receive_arguments">
+<title>Receive arguments</title>
+<simpara>Now that we learned a bit abour variables and testing, let&#8217;s expand our greeting method to receive arguments.
+It&#8217;s a good practice to write tests before writing the code that uses them. This is one of the steps done by the TDD process.
+First write a test that fails, write the code that makes the test pass, then refactor. Those steps are also known as the red-green-refactor cycle.</simpara>
+<simpara>Let&#8217;s change our <literal>test_message</literal> method in our <literal>hello_test.rb</literal> file to:</simpara>
+<formalpara>
+<title>hello_test.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">require 'test/unit'
+require './hello.rb'
+
+class TestGreeting &lt; Test::Unit::TestCase
+  def test_message_with_argument
+    greeting = Greeting.new
+    result = greeting.message("Ruby")
+    expected_value = "Hello, Ruby"
+
+    assert_equal expected_value, result
+  end
+end</programlisting>
+</para>
+</formalpara>
+<simpara>When we run the test with <literal>ruby hello_test.rb</literal>, we should see get an <literal>ArgumentError</literal> error.
+It says that the message method was called with 1 argument, but it expects 0 arguments.
+This is good because we changed our tests but not the actual code.</simpara>
+<simpara>As we are starting to follow the TDD process, let&#8217;s make the minimum changes to the code to fix the error.</simpara>
+<formalpara>
+<title>hello.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">class Greeting
+  def message(name)
+    "Hello, World!"
+  end
+
+  def say_hi
+    puts message("Ruby")
+  end
+end</programlisting>
+</para>
+</formalpara>
+<simpara>After running the test again, we should get 1 failure, instead an error.</simpara>
+<screen linenumbering="unnumbered">&lt;"Hello, Ruby"&gt; expected but was
+&lt;"Hello, World!"&gt;</screen>
+<simpara>See the difference? The error is telling us that we are expecting <literal>"Hello, Ruby"</literal> but we got <literal>"Hello, World!"</literal>.
+Let&#8217;s make the test pass by using an if statement to check if an argument was passed to the method.
+This is not the best way to do it, but it is good to introduce the concept of if statements.</simpara>
+<formalpara>
+<title>hello.rb</title>
+<para>
+<programlisting language="ruby" linenumbering="unnumbered">class Greeting
+  def message(name)
+    if(name)
+      "Hello, #{name}"
+    else
+      "Hello, World!"
+    end
+  end
+
+  def say_hi
+    puts message("Ruby")
+  end
+end</programlisting>
+</para>
+</formalpara>
+<simpara>Running again the test, we should get an output similar to this:</simpara>
+<screen linenumbering="unnumbered">1 tests, 1 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed</screen>
+</section>
+<section xml:id="_making_decisions">
+<title>Making decisions</title>
+<simpara>In Ruby, the keywords if/else are used to make decisions.
+Sometimes we need to take actions based on some conditions like:
+- "If it rains, I will stay at home."
+- "If I don&#8217;t practice, I don&#8217;t learn Ruby."</simpara>
+<programlisting language="ruby" linenumbering="unnumbered">price = 10
+if(price &lt; 10)
+  puts("I will buy this book.")
+ else
+  puts("I will not buy this book.")
+end</programlisting>
+<simpara>This code prints "I will buy this book." because the price is less than 10.
+So, the condition <literal>price &lt; 10</literal> is true, and the code inside the if statement is executed.
+If the price was equal or greater than 10, the code inside the else statement would be executed, thus printing "I will not buy this book."</simpara>
+<simpara>The symbol "&lt;" is used to compare values. It is called "less than" and in Ruby we have multiple ways to compare values.</simpara>
+<informaltable frame="all" rowsep="1" colsep="1">
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Operator</entry>
+<entry align="left" valign="top">Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>&lt;</simpara></entry>
+<entry align="left" valign="top"><simpara>Less than</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>&gt;</simpara></entry>
+<entry align="left" valign="top"><simpara>Greater than</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>&gt;=</simpara></entry>
+<entry align="left" valign="top"><simpara>Greater than or equal to</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>==</simpara></entry>
+<entry align="left" valign="top"><simpara>Equal to</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>!=</simpara></entry>
+<entry align="left" valign="top"><simpara>Not equal to</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>&#8656;</simpara></entry>
+<entry align="left" valign="top"><simpara>Less than or equal to</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+</section>
+</article>
